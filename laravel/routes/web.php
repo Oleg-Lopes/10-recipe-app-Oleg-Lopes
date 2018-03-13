@@ -12,9 +12,23 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect('recipe-app');
+    } else {
+        return redirect('login');
+    }
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/favorites/add', 'RecipesController@store')->name('addFav');
+
+Route::get('/auth', function(){
+    if(!Auth::check()) {
+        $user = App\User::find(1);
+        Auth::login($user);
+    }
+
+    return Auth::user();
+});
