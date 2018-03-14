@@ -22,13 +22,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/favorites', 'RecipesController@index')->name('allFav');
 Route::post('/favorites/add', 'RecipesController@store')->name('addFav');
+Route::delete('/favorites/delete/{id}', 'RecipesController@destroy')->name('deleteFav');
 
 Route::get('/auth', function(){
-    if(!Auth::check()) {
-        $user = App\User::find(1);
-        Auth::login($user);
+    if(Auth::check()) {
+        return Auth::user();
+    } else {
+        return "false";
     }
-
-    return Auth::user();
 });

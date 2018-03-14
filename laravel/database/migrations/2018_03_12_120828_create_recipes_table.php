@@ -16,6 +16,7 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->increments('id');
             $table->text('label');
+            $table->binary('image');
             $table->text('ingredients');
             $table->text('health_labels');
             $table->integer('calories');

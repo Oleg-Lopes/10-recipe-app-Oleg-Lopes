@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Recipe;
 use Illuminate\Http\Request;
 
@@ -17,7 +17,8 @@ class RecipesController extends Controller
     public function index()
     {
         //
-        return Recipe::all();
+        $recipes = Recipe::where('user_id', '=', Auth::id())->get();
+        return $recipes;
     }
 
     /**
@@ -44,13 +45,26 @@ class RecipesController extends Controller
             $recipe->user_id = Auth::id();
 
             $recipe->label = $request->label; // WORKS
+            $recipe->image = $request->image; // WORKS
             $recipe->ingredients = ""; // WORKS
+            $i = 0;
             foreach($request->ingredientLines as $ingredientLine) {
-                $recipe->ingredients .= " " . $ingredientLine;
+                if($i == 0){
+                    $recipe->ingredients .= $ingredientLine;
+                } else {
+                    $recipe->ingredients .= ", " . $ingredientLine;
+                }
+                $i++;
             }
             $recipe->health_labels = ""; // WORKS
+            $i = 0;
             foreach($request->healthLabels as $healthLabel) {
-                $recipe->health_labels .= " " . $healthLabel;
+                if($i == 0){
+                    $recipe->health_labels .= $healthLabel;
+                } else {
+                    $recipe->health_labels .= ", " . $healthLabel;
+                }
+                $i++;
             }
             $recipe->calories = $request->calories; // WORKS
             $recipe->save();
@@ -101,8 +115,9 @@ class RecipesController extends Controller
      * @param  \App\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recipe $recipe)
+    public function destroy($id)
     {
         //
+        DB::table('recipes')->where('id', '=', $id)->delete();
     }
 }

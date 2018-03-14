@@ -48,7 +48,6 @@ module.exports = "<router-outlet></router-outlet>\n"
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59,25 +58,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
 var AppComponent = /** @class */ (function () {
-    function AppComponent(http) {
-        this.http = http;
+    function AppComponent() {
         this.title = "app";
     }
-    AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.http.get("http://localhost:8000/auth").subscribe(function (data) {
-            _this.user = data;
-        });
-    };
+    AppComponent.prototype.ngOnInit = function () { };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: "app-root",
             template: __webpack_require__("../../../../../src/app/app.component.html"),
             styles: [__webpack_require__("../../../../../src/app/app.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [])
     ], AppComponent);
     return AppComponent;
 }());
@@ -182,8 +174,9 @@ module.exports = "<div class=\"mainDiv\">\n  <div class=\"curRecipe\" *ngFor=\"l
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FavoriteDetailComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__recipes_service__ = __webpack_require__("../../../../../src/app/recipes.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__recipes_service__ = __webpack_require__("../../../../../src/app/recipes.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -197,8 +190,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var FavoriteDetailComponent = /** @class */ (function () {
-    function FavoriteDetailComponent(route, recipesService, router) {
+    function FavoriteDetailComponent(http, route, recipesService, router) {
+        this.http = http;
         this.route = route;
         this.recipesService = recipesService;
         this.router = router;
@@ -206,7 +201,7 @@ var FavoriteDetailComponent = /** @class */ (function () {
     }
     FavoriteDetailComponent.prototype.ngOnInit = function () { };
     FavoriteDetailComponent.prototype.deleteFavorite = function (recipe) {
-        this.recipesService.deleteFavorite(recipe);
+        this.recipesService.deleteFavorite(recipe, this.favorites);
     };
     FavoriteDetailComponent.prototype.goToRecipes = function () {
         this.recipesService.goToRecipes();
@@ -220,9 +215,10 @@ var FavoriteDetailComponent = /** @class */ (function () {
             template: __webpack_require__("../../../../../src/app/favorite-detail/favorite-detail.component.html"),
             styles: [__webpack_require__("../../../../../src/app/favorite-detail/favorite-detail.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
-            __WEBPACK_IMPORTED_MODULE_2__recipes_service__["a" /* RecipesService */],
-            __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_3__recipes_service__["a" /* RecipesService */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]])
     ], FavoriteDetailComponent);
     return FavoriteDetailComponent;
 }());
@@ -239,7 +235,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".head {\r\n  text-align: center;\r\n}\r\n\r\nh2 {\r\n  display: inline-block;\r\n}\r\n\r\n.main-div {\r\n  cursor: pointer;\r\n}\r\n", ""]);
+exports.push([module.i, ".head {\r\n  text-align: center;\r\n}\r\n\r\n.main-div {\r\n  cursor: pointer;\r\n}\r\n", ""]);
 
 // exports
 
@@ -252,7 +248,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/favorites/favorites.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"head\">\n  <button (click)=\"goToRecipes()\">&crarr; Search new recipes</button>\n  <h1>Favorite Recipes</h1>\n  <hr>\n</div>\n\n<div class=\"main-div\">\n  <div class=\"recipes\">\n    <div (click)=\"openFavorite(favorite)\" class=\"recipe\" *ngFor=\"let favorite of favorites\">\n      <h2>{{favorite.label}}</h2>\n      <button (click)=\"deleteFavorite(favorite)\">Delete Favorite</button>\n      <img class=\"recipeImg\" src=\"{{favorite.image}}\">\n      <router-outlet></router-outlet>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"head\">\n  <button (click)=\"goToRecipes()\">&crarr; Search new recipes</button>\n  <h1>Favorite Recipes</h1>\n  <hr>\n</div>\n\n<div class=\"main-div\">\n  <div class=\"recipes\">\n    <div class=\"recipe\" *ngFor=\"let favorite of favorites\">\n      <h2 (click)=\"openFavorite(favorite)\">{{favorite.label}}</h2>\n      <button (click)=\"deleteFavorite(favorite)\">Delete Favorite</button>\n      <br>\n      <br>\n      <img (click)=\"openFavorite(favorite)\" class=\"recipeImg\" src=\"{{favorite.image}}\">\n      <router-outlet></router-outlet>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -262,8 +258,9 @@ module.exports = "<div class=\"head\">\n  <button (click)=\"goToRecipes()\">&cra
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FavoritesComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__recipes_service__ = __webpack_require__("../../../../../src/app/recipes.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__recipes_service__ = __webpack_require__("../../../../../src/app/recipes.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -277,20 +274,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var FavoritesComponent = /** @class */ (function () {
-    function FavoritesComponent(route, recipesService, router) {
+    function FavoritesComponent(http, route, recipesService, router) {
+        this.http = http;
         this.route = route;
         this.recipesService = recipesService;
         this.router = router;
-        this.favorites = this.recipesService.favorites;
     }
-    FavoritesComponent.prototype.ngOnInit = function () { };
+    FavoritesComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.http
+            .get("http://localhost:8000/recipe-app/favorites")
+            .subscribe(function (data) {
+            _this.favorites = data;
+        }, function (error) {
+            console.log("error", error);
+        });
+    };
     FavoritesComponent.prototype.openFavorite = function (recipe) {
         this.recipesService.getCurrentFavorite(recipe);
         this.router.navigate(["/favorites", recipe.label]);
     };
     FavoritesComponent.prototype.deleteFavorite = function (recipe) {
-        this.recipesService.deleteFavorite(recipe);
+        this.recipesService.deleteFavorite(recipe, this.favorites);
     };
     FavoritesComponent.prototype.goToRecipes = function () {
         this.recipesService.goToRecipes();
@@ -301,9 +308,10 @@ var FavoritesComponent = /** @class */ (function () {
             template: __webpack_require__("../../../../../src/app/favorites/favorites.component.html"),
             styles: [__webpack_require__("../../../../../src/app/favorites/favorites.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
-            __WEBPACK_IMPORTED_MODULE_1__recipes_service__["a" /* RecipesService */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_2__recipes_service__["a" /* RecipesService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]])
     ], FavoritesComponent);
     return FavoritesComponent;
 }());
@@ -343,8 +351,9 @@ module.exports = "<div class=\"mainDiv\">\n  <div class=\"curRecipe\" *ngFor=\"l
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipeDetailComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__recipes_service__ = __webpack_require__("../../../../../src/app/recipes.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__recipes_service__ = __webpack_require__("../../../../../src/app/recipes.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -358,16 +367,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RecipeDetailComponent = /** @class */ (function () {
-    function RecipeDetailComponent(route, recipesService, router) {
+    function RecipeDetailComponent(http, route, recipesService, router) {
+        this.http = http;
         this.route = route;
         this.recipesService = recipesService;
         this.router = router;
         this.currentRecipe = this.recipesService.currentRecipe;
     }
-    RecipeDetailComponent.prototype.ngOnInit = function () { };
+    RecipeDetailComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.http
+            .get("http://localhost:8000/recipe-app/favorites")
+            .subscribe(function (data) {
+            _this.favorites = data;
+        }, function (error) {
+            console.log("error", error);
+        });
+    };
     RecipeDetailComponent.prototype.addFavorite = function (recipe) {
-        this.recipesService.addFavorite(recipe);
+        this.recipesService.addFavorite(recipe, this.favorites);
         document.getElementById("btn-add-fav").classList.add("disabled");
     };
     RecipeDetailComponent.prototype.goToFavorites = function () {
@@ -382,9 +402,10 @@ var RecipeDetailComponent = /** @class */ (function () {
             template: __webpack_require__("../../../../../src/app/recipe-detail/recipe-detail.component.html"),
             styles: [__webpack_require__("../../../../../src/app/recipe-detail/recipe-detail.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
-            __WEBPACK_IMPORTED_MODULE_2__recipes_service__["a" /* RecipesService */],
-            __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_3__recipes_service__["a" /* RecipesService */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]])
     ], RecipeDetailComponent);
     return RecipeDetailComponent;
 }());
@@ -503,31 +524,35 @@ var RecipesService = /** @class */ (function () {
                 _this.currentFavorite.push(_this.favorites[index]);
             }
         });
-        console.log(this.currentFavorite);
+        // console.log(this.currentFavorite);
     };
-    RecipesService.prototype.addFavorite = function (recipe) {
-        var _this = this;
+    RecipesService.prototype.addFavorite = function (recipe, favorites) {
         var duplicate = false;
-        this.favorites.forEach(function (favorites, index) {
-            if (_this.favorites[index].label == recipe.label) {
+        favorites.forEach(function (favorite, index) {
+            if (favorite.label == recipe.label) {
                 duplicate = true;
             }
         });
         if (!duplicate) {
-            this.favorites.push(recipe);
             this.http.post("http://localhost:8000/favorites/add", recipe).subscribe(function (res) {
-                console.log("Recipe added");
+                console.log("Recipe added to favorites");
             }, function (error) {
                 console.log("Something went wrong...", error);
             });
         }
     };
-    RecipesService.prototype.deleteFavorite = function (recipe) {
-        var _this = this;
-        this.favorites.forEach(function (favorites, index) {
-            if (_this.favorites[index].label == recipe.label) {
-                _this.favorites.splice(index, 1);
+    RecipesService.prototype.deleteFavorite = function (recipe, favorites) {
+        favorites.forEach(function (favorite, index) {
+            if (favorite.label == recipe.label) {
+                favorites = favorites.splice(index, 1);
             }
+        });
+        this.http
+            .delete("http://localhost:8000/favorites/delete/" + recipe.id)
+            .subscribe(function (res) {
+            console.log("Recipe deleted from favorites");
+        }, function (error) {
+            console.log("Something went wrong...", error);
         });
         this.goToFavorites();
     };
