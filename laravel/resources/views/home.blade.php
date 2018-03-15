@@ -15,6 +15,7 @@
                     @endif
 
                     You are logged in!
+                    <a href="../recipe-app">Go to App<a>
                 </div>
             </div>
         </div>
