@@ -370,7 +370,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/recipe-detail/recipe-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mainDiv\">\n  <div class=\"curRecipe\" *ngFor=\"let recipe of currentRecipe\">\n    <button (click)=\"goToRecipes()\">&crarr; Back to recipes</button>\n    <button (click)=\"goToFavorites()\">Favorites</button>\n    <button class=\"logout\" (click)=\"logout()\">Log out</button>\n    <h1>{{recipe.label}}</h1>\n    <img src=\"{{recipe.image}}\">\n    <p>{{recipe.calories | number: '1.0-0'}} kcal</p>\n    <p class=\"ingredients\">{{recipe.ingredientLines}}</p>\n    <p *ngFor=\"let healthLabel of recipe.healthLabels\">{{healthLabel}}</p>\n    <button id=\"btn-add-fav\" (click)=\"addFavorite(recipe)\">Add Favorite</button>\n    <div>\n      <router-outlet></router-outlet>\n    </div>\n  </div>\n  <script>angular.module(\"App\").constant(\"CSRF_TOKEN\", '{!! csrf_token() !!}');</script>"
+module.exports = "<div class=\"mainDiv\">\n  <div class=\"curRecipe\" *ngFor=\"let recipe of currentRecipe\">\n    <button (click)=\"goToRecipes()\">&crarr; Back to recipes</button>\n    <button (click)=\"goToFavorites()\">Favorites</button>\n    <button class=\"logout\" (click)=\"logout()\">Log out</button>\n    <h1>{{recipe.label}}</h1>\n    <img src=\"{{recipe.image}}\">\n    <p>{{recipe.calories | number: '1.0-0'}} kcal</p>\n    <p class=\"ingredients\">{{recipe.ingredientLines}}</p>\n    <p *ngFor=\"let healthLabel of recipe.healthLabels\">{{healthLabel}}</p>\n    <button id=\"btn-add-fav\" (click)=\"addFavorite(recipe)\">Add Favorite</button>\n    <div>\n      <router-outlet></router-outlet>\n    </div>\n  </div>"
 
 /***/ }),
 

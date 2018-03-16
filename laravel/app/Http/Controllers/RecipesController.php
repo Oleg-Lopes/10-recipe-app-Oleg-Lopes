@@ -81,9 +81,6 @@ class RecipesController extends Controller
     public function show($label)
     {
         //
-        if(Auth::check()) {
-            return Recipe::where(['label', '=', $label], ['user_id', '=', Auth::user()->id]);
-        }
     }
 
     /**
