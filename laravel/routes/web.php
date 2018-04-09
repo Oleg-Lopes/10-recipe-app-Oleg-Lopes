@@ -24,7 +24,7 @@ Route::get('/auth', function(){
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect('recipe-app');
+        return redirect('r');
     } else {
         return redirect('login');
     }

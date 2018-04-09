@@ -68,11 +68,13 @@ var AppComponent = /** @class */ (function () {
         this.http = http;
         this.route = route;
         this.router = router;
-        this.title = "app";
+        this.title = "Recipe App";
     }
     AppComponent.prototype.ngOnInit = function () {
-        this.http.get("http://localhost:8000/auth").subscribe(function (data) { }, function (error) {
-            window.location.href = "http://localhost:8000/login";
+        this.http.get("http://oleglopes.chas.academy/recipe-app/auth").subscribe(function (data) {
+            console.log("All your base are belong to us!");
+        }, function (error) {
+            window.location.href = "http://oleglopes.chas.academy/recipe-app/login";
         });
     };
     AppComponent = __decorate([
@@ -216,7 +218,7 @@ var FavoriteDetailComponent = /** @class */ (function () {
     FavoriteDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.http
-            .get("http://localhost:8000/recipe-app/favorites")
+            .get("http://oleglopes.chas.academy/recipe-app/favorites")
             .subscribe(function (data) {
             _this.favorites = data;
         }, function (error) {
@@ -311,7 +313,7 @@ var FavoritesComponent = /** @class */ (function () {
     FavoritesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.http
-            .get("http://localhost:8000/recipe-app/favorites")
+            .get("http://oleglopes.chas.academy/recipe-app/favorites")
             .subscribe(function (data) {
             _this.favorites = data;
         }, function (error) {
@@ -408,7 +410,7 @@ var RecipeDetailComponent = /** @class */ (function () {
     RecipeDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.http
-            .get("http://localhost:8000/recipe-app/favorites")
+            .get("http://oleglopes.chas.academy/recipe-app/favorites")
             .subscribe(function (data) {
             _this.favorites = data;
         }, function (error) {
@@ -560,7 +562,9 @@ var RecipesService = /** @class */ (function () {
             }
         });
         if (!duplicate) {
-            this.http.post("http://localhost:8000/favorites/add", recipe).subscribe(function (res) {
+            this.http
+                .post("http://oleglopes.chas.academy/recipe-app/favorites/add", recipe)
+                .subscribe(function (res) {
                 console.log("Recipe added to favorites");
             }, function (error) {
                 console.log("Something went wrong...", error);
@@ -574,7 +578,7 @@ var RecipesService = /** @class */ (function () {
             }
         });
         this.http
-            .delete("http://localhost:8000/favorites/delete/" + recipe.id)
+            .delete("http://oleglopes.chas.academy/recipe-app/favorites/delete/" + recipe.id)
             .subscribe(function (res) {
             console.log("Recipe deleted from favorites");
         }, function (error) {
@@ -589,7 +593,7 @@ var RecipesService = /** @class */ (function () {
         this.router.navigate(["/recipes"]);
     };
     RecipesService.prototype.logout = function () {
-        window.location.href = "http://localhost:8000/logout";
+        window.location.href = "http://oleglopes.chas.academy/recipe-app/logout";
     };
     RecipesService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
