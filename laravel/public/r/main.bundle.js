@@ -111,12 +111,14 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__recipe_detail_recipe_detail_component__ = __webpack_require__("../../../../../src/app/recipe-detail/recipe-detail.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__favorites_favorites_component__ = __webpack_require__("../../../../../src/app/favorites/favorites.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__favorite_detail_favorite_detail_component__ = __webpack_require__("../../../../../src/app/favorite-detail/favorite-detail.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__recipes_recipe_pipe__ = __webpack_require__("../../../../../src/app/recipes/recipe-pipe.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -139,14 +141,15 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_5__recipes_recipes_component__["a" /* RecipesComponent */],
                 __WEBPACK_IMPORTED_MODULE_9__recipe_detail_recipe_detail_component__["a" /* RecipeDetailComponent */],
                 __WEBPACK_IMPORTED_MODULE_10__favorites_favorites_component__["a" /* FavoritesComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__favorite_detail_favorite_detail_component__["a" /* FavoriteDetailComponent */]
+                __WEBPACK_IMPORTED_MODULE_11__favorite_detail_favorite_detail_component__["a" /* FavoriteDetailComponent */],
+                __WEBPACK_IMPORTED_MODULE_12__recipes_recipe_pipe__["a" /* RecipeFilterPipe */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_7__angular_common_http__["b" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_8__recipe_routing_module__["a" /* RecipeRoutingModule */]
+                __WEBPACK_IMPORTED_MODULE_8__recipe_routing_module__["a" /* RecipeRoutingModule */],
             ],
             providers: [__WEBPACK_IMPORTED_MODULE_6__recipes_service__["a" /* RecipesService */]],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
@@ -608,6 +611,44 @@ var RecipesService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/recipes/recipe-pipe.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipeFilterPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var RecipeFilterPipe = /** @class */ (function () {
+    function RecipeFilterPipe() {
+    }
+    RecipeFilterPipe.prototype.transform = function (allRecipes, filter) {
+        return allRecipes.filter(function (item) {
+            if (!filter) {
+                return item;
+            }
+            return item.dietLabels.indexOf(filter) !== -1;
+        });
+    };
+    RecipeFilterPipe = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({}),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["T" /* Pipe */])({
+            name: 'recipeFilter',
+            pure: false
+        })
+    ], RecipeFilterPipe);
+    return RecipeFilterPipe;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/recipes/recipes.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -616,20 +657,13 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".head {\n  text-align: center;\n} /* You can add global styles to this file, and also import other style files */ .main-div {\n  cursor: pointer;\n} .logout {\n  position: absolute;\n  top: 20px;\n  right: 20px;\n}\n", ""]);
+exports.push([module.i, ".head {\n  text-align: center;\n} /* You can add global styles to this file, and also import other style files */ .main-div {\n  cursor: pointer;\n} .nav {\n  list-style: none;\n} .nav li {\n  margin: 0 10px;\n  display: inline;\n  cursor: pointer;\n} .logout {\n  position: absolute;\n  top: 20px;\n  right: 20px;\n}\n", ""]);
 
 // exports
 
 
 /*** EXPORTS FROM exports-loader ***/
 module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/recipes/recipes.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"head\">\n  <button (click)=\"goToFavorites()\">Favorites</button>\n  <button class=\"logout\" (click)=\"logout()\">Log out</button>\n  <h1>Find your Food Recipes</h1>\n  <hr>\n  <input type=\"text\" [(ngModel)]=recipesService.input>\n  <button (click)=recipesService.findRecipes()>Search recipe</button>\n  <hr>\n</div>\n\n<div class=\"main-div\">\n  <div class=\"recipes\">\n    <div (click)=\"openRecipe(recipe)\" class=\"recipe\" *ngFor=\"let recipe of recipes\">\n      <h2>{{recipe.label}}</h2>\n      <img class=\"recipeImg\" src=\"{{recipe.image}}\">\n      <router-outlet></router-outlet>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -663,8 +697,44 @@ var RecipesComponent = /** @class */ (function () {
         this.router = router;
         this.http = http;
         this.recipes = this.recipesService.recipes;
+        this.filters = [
+            {
+                id: 0,
+                description: ''
+            },
+            {
+                id: 1,
+                description: 'Low-Carb'
+            },
+            {
+                id: 2,
+                description: 'Low-Fat'
+            },
+            {
+                id: 3,
+                description: 'High-Protein'
+            },
+            {
+                id: 4,
+                description: 'Balanced'
+            },
+        ];
     }
+    Object.defineProperty(RecipesComponent.prototype, "type", {
+        get: function () { return this.toggle ? this.filter : ''; },
+        enumerable: true,
+        configurable: true
+    });
     RecipesComponent.prototype.ngOnInit = function () { };
+    RecipesComponent.prototype.toggleFilter = function (id) {
+        if (id > 0) {
+            this.toggle = true;
+        }
+        else {
+            this.toggle = false;
+        }
+        this.filter = this.filters[id].description;
+    };
     RecipesComponent.prototype.goToFavorites = function () {
         this.recipesService.goToFavorites();
     };
@@ -678,8 +748,8 @@ var RecipesComponent = /** @class */ (function () {
     RecipesComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: "app-recipes",
-            template: __webpack_require__("../../../../../src/app/recipes/recipes.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/recipes/recipes.component.css")]
+            styles: [__webpack_require__("../../../../../src/app/recipes/recipes.component.css")],
+            template: "<div class=\"head\">\n  <button (click)=\"goToFavorites()\">Favorites</button>\n  <button class=\"logout\" (click)=\"logout()\">Log out</button>\n  <h1>Find your Food Recipes</h1>\n  <hr>\n  <input type=\"text\" [(ngModel)]=recipesService.input>\n  <button (click)=recipesService.findRecipes()>Search recipe</button>\n  <hr>\n  <ul class=\"nav\">\n      <li *ngFor=\"let filter of filters\" class=\"nav-item\">\n          <span class=\"nav-link\" (click)=\"toggleFilter(filter.id)\" *ngIf=\"!filter.description\">All</span>\n          <span class=\"nav-link\" (click)=\"toggleFilter(filter.id)\">{{filter.description}}</span>\n      </li>\n  </ul>\n  <hr>\n</div>\n\n<div class=\"main-div\">\n  <div class=\"recipes\">\n    <div (click)=\"openRecipe(recipe)\" class=\"recipe\" *ngFor=\"let recipe of (recipes | recipeFilter:type)\">\n      <h2>{{recipe.label}}</h2>\n      <img class=\"recipeImg\" src=\"{{recipe.image}}\">\n      <router-outlet></router-outlet>\n    </div>\n  </div>\n</div>"
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_2__recipes_service__["a" /* RecipesService */],
